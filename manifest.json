@@ -12,7 +12,8 @@
   },
   "builders": {
     "react": "2.x",
-    "pages": "0.x"
+    "pages": "0.x",
+    "styles": "2.x"
   },
   "scripts": {
     "postreleasy": "vtex publish"

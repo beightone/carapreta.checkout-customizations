@@ -1,0 +1,134 @@
+.custom-cep-container {
+  margin-top: 12px;
+  padding: 32px;
+  background-color: #FAFAF9;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid  #e4e4e7;
+}
+
+.custom-cep-container .custom-cep-container-input  {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.custom-cep-container .custom-cep-form .custom-cep-label {
+  color:  #3F3F46;
+  font-family: Karla;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.14px;
+  margin-bottom: 16px;
+}
+
+.custom-cep-container .custom-cep-container-input .custom-ship-postalCode {
+  max-width: 209px;
+  width: 100%;
+  height: 48px;
+  padding: 12px 16px;
+  border-radius:  8px;
+  border: 1px solid  #D4D4D8;
+  background-color: #FFF;
+
+  color: #71717A;
+  font-family: Karla;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.16px;
+}
+
+.custom-cep-container .custom-cep-container-input .custom-ship-postalCode:focus {
+  box-shadow: none;
+}
+
+.custom-cep-container .custom-cep-container-input .custom-cep-submit {
+  max-width: 131px;
+  width: 100%;
+  height: 48px;
+  border-radius:8px;
+  background:  #111116;
+  border: none;
+}
+
+.custom-cep-container .custom-cep-container-input .custom-cep-submit .custom-cep-span {
+  color: #FFF;
+  font-family: Karla;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.16px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-cep-container .custom-cep-container-input .custom-cep-submit .custom-cep-span::after {
+  content: "";
+  display: block;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIiBmaWxsPSJub25lIj4KICA8cGF0aCBkPSJNNC4xNjY2NiAxMEgxNS44MzMzTTE1LjgzMzMgMTBMOS45OTk5OSA0LjE2NjY2TTE1LjgzMzMgMTBMOS45OTk5OSAxNS44MzMzIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==");
+  width: 20px;
+  height: 20px;
+}
+
+
+.custom-cep-container .custom-cep-form .custom-cep-alert {
+  color:  #3F3F46;
+
+  font-family: Karla;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: -0.12px;
+
+  margin-bottom: 12px;
+}
+
+.custom-cep-container .custom-cep-form .custom-search-cep {
+  color:  #947C4E;
+  font-family: Karla;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.12px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+@media screen and (max-width: 575px) {
+  .custom-cep-container {
+    padding: 12px;
+  }
+
+  .custom-cep-container .custom-cep-container-input {
+    flex-direction: column;
+  }
+
+  .custom-cep-container .custom-cep-container-input .custom-ship-postalCode,
+  .custom-cep-container .custom-cep-container-input .custom-cep-submit  {
+    max-width: 100%;
+  }
+
+  .custom-cep-container .custom-cep-container-input .custom-cep-submit {
+    padding: 0 20px;
+  }
+
+  .custom-cep-container .custom-cep-container-input .custom-cep-submit .custom-cep-span {
+    justify-content: flex-start;
+  }
+}

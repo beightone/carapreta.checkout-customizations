@@ -1,38 +1,11 @@
-import { Component } from 'react'
+import React, { FC } from 'react';
 
-import { Logger } from './utils/loggerDataDog'
+import CheckoutCustomCep from './components/CheckoutCustomCep';
 
-const logger = new Logger()
-
-class CheckoutCheckingInformations extends Component<{}, CheckoutCheckingInformationsState> {
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      orderForm: null,
-    }
-  }
-
-  setOrderForm = (_: any, orderForm: OrderForm) => {
-    this.setState({ orderForm })
-    const postalCode = orderForm.shippingData.address.postalCode
-    console.log(postalCode, orderForm)
-    logger.info(`CHECKOUT_DATA_INFORMATION ${postalCode}`, JSON.stringify(orderForm))
-  }
-
-  componentDidMount() {
-    $(window).on('orderFormUpdated.vtex', this.setOrderForm)
-  }
-
-  componentWillUnmount() {
-    $(window).off('orderFormUpdated.vtex', this.setOrderForm)
-  }
-  render() {
-    return null
-  }
+const UniversalRenderProvider: FC = () => {
+  return (
+    <CheckoutCustomCep />
+  );
 }
 
-interface CheckoutCheckingInformationsState {
-  orderForm: OrderForm | null
-}
-
-export default CheckoutCheckingInformations
+export default UniversalRenderProvider;
