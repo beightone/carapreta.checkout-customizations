@@ -3,6 +3,22 @@ import React, { FC, useEffect } from 'react';
 const CheckoutCustomCep: FC = () => {
   const [postalCode, setPostalCode] = React.useState('');
 
+  const handleInputCep = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, "");
+
+    if (value.length > 5) {
+      value = value.replace(/^(\d{5})(\d)/, "$1-$2");
+    }
+
+    if (value.length > 9) {
+      value = value.slice(0, 9);
+    }
+
+    setPostalCode(value);
+  };
+
   const resetShippingData = (orderFormId: string | undefined) => {
 
     if (!orderFormId) {
@@ -61,8 +77,8 @@ const CheckoutCustomCep: FC = () => {
 
   await fetch(`/api/checkout/pub/orderForm/${orderFormId}/attachments/shippingData`, requestOptions)
   .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.error("erro no cep", error));
+  .then((result) => {
+  console.log(result)
 
   //@ts-ignore
   vtexjs.checkout.getOrderForm()
@@ -70,23 +86,12 @@ const CheckoutCustomCep: FC = () => {
 
   window?.localStorage?.setItem('userEnteredZipCode', 'true');
 
+  const bodyElement = document.querySelector('body')
+  bodyElement?.classList.remove('zip-code-not-entered')
+
+  })
+  .catch((error) => console.error("erro no cep", error));
   }
-
-  const handleInputCep = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-
-    value = value.replace(/\D/g, "");
-
-    if (value.length > 5) {
-      value = value.replace(/^(\d{5})(\d)/, "$1-$2");
-    }
-
-    if (value.length > 9) {
-      value = value.slice(0, 9);
-    }
-
-    setPostalCode(value);
-  };
 
 
   useEffect(() => {
