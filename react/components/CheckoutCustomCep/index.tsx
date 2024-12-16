@@ -62,7 +62,7 @@ const CheckoutCustomCep: FC = () => {
   await fetch(`/api/checkout/pub/orderForm/${orderFormId}/attachments/shippingData`, requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
-  .catch((error) => console.error(error));
+  .catch((error) => console.error("erro no cep", error));
 
   //@ts-ignore
   vtexjs.checkout.getOrderForm()
@@ -71,6 +71,23 @@ const CheckoutCustomCep: FC = () => {
   window?.localStorage?.setItem('userEnteredZipCode', 'true');
 
   }
+
+  const handleInputCep = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, "");
+
+    if (value.length > 5) {
+      value = value.replace(/^(\d{5})(\d)/, "$1-$2");
+    }
+
+    if (value.length > 9) {
+      value = value.slice(0, 9);
+    }
+
+    setPostalCode(value);
+  };
+
 
   useEffect(() => {
    const userEnteredZipCode = window?.localStorage?.getItem('userEnteredZipCode') == "true"
@@ -95,7 +112,8 @@ const CheckoutCustomCep: FC = () => {
           className="custom-ship-postal-code"
           required
           placeholder="Digite seu CEP"
-          onChange={(e) => setPostalCode(e.target.value)}
+          value={postalCode}
+          onChange={handleInputCep}
           />
           <button className="custom-cep-submit" type="submit">
            <span className="custom-cep-span">Calcular</span>
