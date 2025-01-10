@@ -1,8 +1,10 @@
 import React, { FC, useEffect } from 'react'
+import { ISellers } from '../../typings/sellers'
 
 const CheckoutCustomCep: FC = () => {
   const [postalCode, setPostalCode] = React.useState('')
   const [postalCodeFilled, setPostalCodeFilled] = React.useState(false)
+  const [errorModal, setErrorModal] = React.useState(false)
 
   const handleInputCep = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value
@@ -51,7 +53,19 @@ const CheckoutCustomCep: FC = () => {
 
   const updateShippingData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const checkRegionServed = await fetch(
+      `/api/checkout/pub/regions?country=BRA&postalCode=${postalCode}`
+    )
 
+    if (!checkRegionServed.ok) {
+      throw new Error(`HTTP error ${checkRegionServed.status}`)
+    }
+    const sellersByRegion: ISellers[] = await checkRegionServed.json()
+    const hasSellers = sellersByRegion[0].sellers.length > 0
+    if (!hasSellers) {
+      setErrorModal(true)
+      return
+    }
     //@ts-ignore
     const orderFormId = window?.vtexjs?.checkout?.orderFormId
 
@@ -89,8 +103,6 @@ const CheckoutCustomCep: FC = () => {
     )
       .then(response => response.text())
       .then(result => {
-        console.log(result)
-
         //@ts-ignore
         vtexjs.checkout.getOrderForm().done(function(orderForm: any) {})
 
@@ -125,49 +137,78 @@ const CheckoutCustomCep: FC = () => {
   }, [])
 
   return (
-    <div className="custom-cep-container">
-      {postalCodeFilled ? (
-        <div className="custom-cep-form">
-          <p className="custom-cep-label">
-            Digite o CEP para finalizar a compra*
-          </p>
-          <div className="custom-cep-container-input">
-            <span className="custom-ship-postal-code">{postalCode}</span>
-            <button className="custom-cep-submit" onClick={resetPostalCode}>
-              <span className="custom-cep-span">Alterar</span>
+    <>
+      <div className="custom-cep-container">
+        {postalCodeFilled ? (
+          <div className="custom-cep-form">
+            <p className="custom-cep-label">
+              Digite o CEP para finalizar a compra*
+            </p>
+            <div className="custom-cep-container-input">
+              <span className="custom-ship-postal-code">{postalCode}</span>
+              <button className="custom-cep-submit" onClick={resetPostalCode}>
+                <span className="custom-cep-span">Alterar</span>
+              </button>
+            </div>
+          </div>
+        ) : (
+          <form className="custom-cep-form" onSubmit={updateShippingData}>
+            <label
+              htmlFor="custom-ship-postalCode"
+              className="custom-cep-label"
+            >
+              Digite o CEP para finalizar a compra*
+            </label>
+            <div className="custom-cep-container-input">
+              <input
+                type="text"
+                className="custom-ship-postal-code"
+                required
+                placeholder="Digite seu CEP"
+                value={postalCode}
+                onChange={handleInputCep}
+              />
+              <button className="custom-cep-submit" type="submit">
+                <span className="custom-cep-span">Calcular</span>
+              </button>
+            </div>
+            <p className="custom-cep-alert">*Preenchimento obrigatório</p>
+            <a
+              className="custom-search-cep"
+              href="https://buscacepinter.correios.com.br/app/endereco/index.php?t"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Não sei meu CEP
+            </a>
+          </form>
+        )}
+      </div>
+      {errorModal && (
+        <div className="modal-zip-code-not-error-wrapper">
+          <div className="modal-zip-code-not-entered-content">
+            <button
+              className="btn-close-modal"
+              onClick={() => {
+                setErrorModal(false)
+                setPostalCode('')
+              }}
+            ></button>
+            <h2>Desculpe</h2>
+            <p>Ainda não atendemos a sua região</p>
+            <button
+              className="btn-try-again"
+              onClick={() => {
+                setErrorModal(false)
+                setPostalCode('')
+              }}
+            >
+              Tentar outro CEP
             </button>
           </div>
         </div>
-      ) : (
-        <form className="custom-cep-form" onSubmit={updateShippingData}>
-          <label htmlFor="custom-ship-postalCode" className="custom-cep-label">
-            Digite o CEP para finalizar a compra*
-          </label>
-          <div className="custom-cep-container-input">
-            <input
-              type="text"
-              className="custom-ship-postal-code"
-              required
-              placeholder="Digite seu CEP"
-              value={postalCode}
-              onChange={handleInputCep}
-            />
-            <button className="custom-cep-submit" type="submit">
-              <span className="custom-cep-span">Calcular</span>
-            </button>
-          </div>
-          <p className="custom-cep-alert">*Preenchimento obrigatório</p>
-          <a
-            className="custom-search-cep"
-            href="https://buscacepinter.correios.com.br/app/endereco/index.php?t"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Não sei meu CEP
-          </a>
-        </form>
       )}
-    </div>
+    </>
   )
 }
 
