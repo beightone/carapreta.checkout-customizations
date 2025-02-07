@@ -16,7 +16,7 @@
     "@types/react-dom": "^16.0.5",
     "@types/react-helmet": "^5.0.5",
     "@types/react-intl": "^2.3.5",
-    "carapreta.checkout-customizations": "https://sel3064--carapreta.myvtex.com/_v/private/typings/linked/v1/carapreta.checkout-customizations@0.0.4+build1734113698/public/@types/carapreta.checkout-customizations",
+    "carapreta.checkout-customizations": "http://carapreta.vtexassets.com/_v/public/typings/v1/carapreta.checkout-customizations@0.0.4/public/@types/carapreta.checkout-customizations",
     "eslint": "^6.4.0",
     "eslint-config-vtex": "^11.0.0",
     "eslint-config-vtex-react": "^5.0.1",

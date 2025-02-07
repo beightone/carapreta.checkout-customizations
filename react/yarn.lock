@@ -500,9 +500,9 @@ caniuse-lite@^1.0.30001043, caniuse-lite@^1.0.30001061:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001084.tgz#00e471931eaefbeef54f46aa2203914d3c165669"
   integrity sha512-ftdc5oGmhEbLUuMZ/Qp3mOpzfZLCxPYKcvGv6v2dJJ+8EdqcvZRbAGOiLmkM/PV1QGta/uwBs8/nCl6sokDW6w==
 
-"carapreta.checkout-customizations@https://sel3064--carapreta.myvtex.com/_v/private/typings/linked/v1/carapreta.checkout-customizations@0.0.4+build1734113698/public/@types/carapreta.checkout-customizations":
+"carapreta.checkout-customizations@http://carapreta.vtexassets.com/_v/public/typings/v1/carapreta.checkout-customizations@0.0.4/public/@types/carapreta.checkout-customizations":
   version "0.0.4"
-  resolved "https://sel3064--carapreta.myvtex.com/_v/private/typings/linked/v1/carapreta.checkout-customizations@0.0.4+build1734113698/public/@types/carapreta.checkout-customizations#d1abe3aad91a1ba14dd68e865ab0b37312bc6f0e"
+  resolved "http://carapreta.vtexassets.com/_v/public/typings/v1/carapreta.checkout-customizations@0.0.4/public/@types/carapreta.checkout-customizations#4aca8637ef9cfa48ba2412854c168284098228ea"
 
 case-sensitive-paths-webpack-plugin@^2.2.0:
   version "2.3.0"
