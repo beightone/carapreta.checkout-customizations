@@ -5,22 +5,30 @@ const CheckoutCustomCep: FC = () => {
   const [postalCode, setPostalCode] = React.useState('')
   const [postalCodeFilled, setPostalCodeFilled] = React.useState(false)
   const [errorModal, setErrorModal] = React.useState(false)
+  const [hasEditedAfterFill, setHasEditedAfterFill] = React.useState(false)
 
-  const handleInputCep = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value
+  const handleInputCep = (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  let value = e.target.value
 
-    value = value.replace(/\D/g, '')
+  value = value.replace(/\D/g, '')
 
-    if (value.length > 5) {
-      value = value.replace(/^(\d{5})(\d)/, '$1-$2')
-    }
-
-    if (value.length > 9) {
-      value = value.slice(0, 9)
-    }
-
-    setPostalCode(value)
+  if (value.length > 5) {
+    value = value.replace(/^(\d{5})(\d)/, '$1-$2')
   }
+
+  if (value.length > 9) {
+    value = value.slice(0, 9)
+  }
+
+  setPostalCode(value)
+
+  if (postalCodeFilled) {
+    setPostalCodeFilled(false)
+    setHasEditedAfterFill(true)
+  }
+}
 
   const resetShippingData = (orderFormId: string | undefined) => {
     if (!orderFormId) {
@@ -111,6 +119,7 @@ const CheckoutCustomCep: FC = () => {
         const bodyElement = document.querySelector('body')
         bodyElement?.classList.remove('zip-code-not-entered')
         setPostalCodeFilled(true)
+        setHasEditedAfterFill(false)
       })
       .catch(error => console.error('erro no cep', error))
   }
@@ -139,50 +148,48 @@ const CheckoutCustomCep: FC = () => {
   return (
     <>
       <div className="custom-cep-container">
-        {postalCodeFilled ? (
-          <div className="custom-cep-form">
-            <p className="custom-cep-label">
-              Digite o CEP para finalizar a compra*
-            </p>
-            <div className="custom-cep-container-input">
-              <span className="custom-ship-postal-code">{postalCode}</span>
-              <button className="custom-cep-submit" onClick={resetPostalCode}>
-                <span className="custom-cep-span">Alterar</span>
-              </button>
-            </div>
-          </div>
-        ) : (
-          <form className="custom-cep-form" onSubmit={updateShippingData}>
-            <label
-              htmlFor="custom-ship-postalCode"
-              className="custom-cep-label"
-            >
-              Digite o CEP para finalizar a compra*
-            </label>
-            <div className="custom-cep-container-input">
-              <input
-                type="text"
-                className="custom-ship-postal-code"
-                required
-                placeholder="Digite seu CEP"
-                value={postalCode}
-                onChange={handleInputCep}
-              />
-              <button className="custom-cep-submit" type="submit">
-                <span className="custom-cep-span">Calcular</span>
-              </button>
-            </div>
-            <p className="custom-cep-alert">*Preenchimento obrigatório</p>
-            <a
-              className="custom-search-cep"
-              href="https://buscacepinter.correios.com.br/app/endereco/index.php?t"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Não sei meu CEP
-            </a>
-          </form>
-        )}
+        <form className="custom-cep-form" onSubmit={updateShippingData}>
+  <label
+    htmlFor="custom-ship-postalCode"
+    className="custom-cep-label"
+  >
+    Digite o CEP para finalizar a compra*
+  </label>
+
+  <div className="custom-cep-container-input">
+    <input
+      type="text"
+      className="custom-ship-postal-code"
+      required
+      placeholder="Digite seu CEP"
+      value={postalCode}
+      onChange={handleInputCep}
+    />
+
+    <button className="custom-cep-submit" type="submit">
+      <span className="custom-cep-span">
+          {postalCodeFilled
+            ? 'Alterar'
+            : hasEditedAfterFill
+            ? 'Adicionar'
+            : 'Calcular'}
+      </span>
+    </button>
+  </div>
+
+  <p className="custom-cep-alert">
+    *Preenchimento obrigatório
+  </p>
+
+  <a
+    className="custom-search-cep"
+    href="https://buscacepinter.correios.com.br/app/endereco/index.php?t"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Não sei meu CEP
+  </a>
+</form>
       </div>
       {errorModal && (
         <div className="modal-zip-code-not-error-wrapper">
