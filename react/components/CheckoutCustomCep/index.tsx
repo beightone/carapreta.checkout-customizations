@@ -166,15 +166,32 @@ const CheckoutCustomCep: FC = () => {
       onChange={handleInputCep}
     />
 
-    <button className="custom-cep-submit" type="submit">
-      <span className="custom-cep-span">
-          {postalCodeFilled
-            ? 'Alterar'
-            : hasEditedAfterFill
-            ? 'Adicionar'
-            : 'Calcular'}
-      </span>
-    </button>
+    <button
+  className="custom-cep-submit"
+  type="button"
+  onClick={() => {
+    if (postalCodeFilled) {
+      setPostalCode('')
+      setPostalCodeFilled(false)
+      setHasEditedAfterFill(true)
+      return
+    }
+
+    document
+      .querySelector('.custom-cep-form')
+      ?.dispatchEvent(
+        new Event('submit', { cancelable: true, bubbles: true })
+      )
+  }}
+>
+  <span className="custom-cep-span">
+    {postalCodeFilled
+      ? 'Alterar'
+      : hasEditedAfterFill
+      ? 'Adicionar'
+      : 'Calcular'}
+  </span>
+</button>
   </div>
 
   <p className="custom-cep-alert">
