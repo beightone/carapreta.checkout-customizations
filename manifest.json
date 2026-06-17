@@ -1,7 +1,7 @@
 {
   "name": "checkout-customizations",
   "vendor": "carapreta",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "title": "Checkout Customizations",
   "description": "Checkout Button Example",
   "credentialType": "absolute",
